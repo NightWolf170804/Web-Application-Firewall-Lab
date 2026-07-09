@@ -129,3 +129,215 @@ The repository includes screenshots demonstrating:
 - Authentication Gateway
 - Custom Deny Rules
 - Attack Logs
+
+---
+
+# ⚙️ Installation Summary
+
+The lab environment was built using the following high-level steps:
+
+1. Installed Ubuntu 26.04 LTS.
+2. Installed Apache, PHP, and MariaDB.
+3. Deployed DVWA from the official GitHub repository.
+4. Configured the DVWA database.
+5. Installed SafeLine WAF using Docker.
+6. Configured SafeLine as a Reverse Proxy.
+7. Generated and imported SSL certificates.
+8. Enabled HTTPS access through SafeLine.
+9. Verified application accessibility through the WAF.
+10. Configured and tested multiple security features.
+
+> 📖 Detailed installation steps are available in **docs/Installation.md**
+
+---
+
+# 🧪 Security Testing
+
+The following attack scenarios were tested against DVWA through SafeLine WAF.
+
+## 1. SQL Injection Protection
+
+### Attack
+
+```
+1' OR '1'='1
+```
+
+### Result
+
+- SafeLine detected the malicious payload.
+- The request was blocked before reaching DVWA.
+- The attack was recorded in the SafeLine dashboard.
+
+**Screenshot**
+
+```
+images/sql-blocked.png
+```
+
+---
+
+## 2. Cross-Site Scripting (XSS)
+
+### Attack
+
+```html
+<script>alert('XSS')</script>
+```
+
+### Result
+
+- SafeLine identified the malicious JavaScript payload.
+- Access was denied.
+- The attack was logged successfully.
+
+**Screenshot**
+
+```
+images/xss-blocked.png
+```
+
+---
+
+## 3. HTTP Flood Defense
+
+To simulate high-volume traffic, multiple HTTP requests were generated from Kali Linux.
+
+### Objective
+
+Demonstrate SafeLine's rate-limiting capability.
+
+### Result
+
+- SafeLine detected excessive requests.
+- Rate limiting was applied.
+- Flood traffic was mitigated.
+
+**Screenshot**
+
+```
+images/http-flood.png
+```
+
+---
+
+## 4. Authentication Gateway
+
+SafeLine Authentication was configured to protect the application before requests reached DVWA.
+
+### Result
+
+- Users were required to authenticate before accessing the application.
+- Unauthorized users could not access the protected resource.
+
+**Screenshot**
+
+```
+images/auth-gateway.png
+```
+
+---
+
+## 5. Custom Deny Rules
+
+Custom access control rules were configured to demonstrate policy enforcement.
+
+### URL Path Blocking
+
+A rule was created to block access to selected DVWA pages.
+
+Example:
+
+```
+/DVWA/vulnerabilities/brute/
+```
+
+Result:
+
+- Access was denied.
+- SafeLine logged the request.
+
+---
+
+### Request Header Blocking
+
+A custom rule was configured to inspect HTTP request headers.
+
+Requests containing the keyword:
+
+```
+curl
+```
+
+were denied.
+
+Result:
+
+- Browser access continued to work normally.
+- Requests sent using `curl` were blocked by SafeLine.
+
+**Screenshot**
+
+```
+images/custom-deny.png
+```
+
+---
+
+# 📊 Attack Monitoring
+
+SafeLine provides real-time monitoring and logging for all detected attacks.
+
+The dashboard records information such as:
+
+- Source IP
+- Attack Type
+- Requested URL
+- Timestamp
+- Action Taken
+- Application Name
+
+This enables administrators to monitor malicious activity and investigate security events.
+
+**Screenshot**
+
+```
+images/attack-logs.png
+```
+
+---
+
+# 📚 Learning Outcomes
+
+This project helped me gain practical experience with:
+
+- Reverse Proxy deployment
+- Web Application Firewall (WAF) configuration
+- HTTPS and SSL certificate management
+- Apache web server administration
+- Docker deployment
+- SQL Injection detection
+- Cross-Site Scripting (XSS) protection
+- HTTP Flood mitigation
+- Authentication Gateway configuration
+- Custom security rule creation
+- Security event monitoring
+- Web application security testing
+
+---
+
+# 🔮 Future Improvements
+
+Potential enhancements for this lab include:
+
+- Integrating a SIEM platform for centralized log monitoring.
+- Configuring external authentication providers such as LDAP or OAuth.
+- Adding OWASP CRS-based custom rules.
+- Automating attack simulations using security testing tools.
+- Monitoring multiple protected web applications through a single WAF instance.
+
+---
+
+# 🙏 Acknowledgements
+
+This repository documents my hands-on implementation, configuration, testing, and troubleshooting of a SafeLine WAF and DVWA lab environment for cybersecurity learning.
