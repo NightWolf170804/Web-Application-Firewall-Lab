@@ -338,6 +338,6 @@ Potential enhancements for this lab include:
 
 ---
 
-# Project Note
+# 📝 Project Note
 
 This repository documents my hands-on implementation, configuration, testing, and troubleshooting of a SafeLine WAF and DVWA lab environment for cybersecurity learning.
