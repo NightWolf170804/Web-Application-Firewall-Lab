@@ -182,7 +182,7 @@ images/sql-blocked.png
 ### Attack
 
 ```html
-<script>alert('XSS')</script>
+<script>alert('Hello')</script>
 ```
 
 ### Result
